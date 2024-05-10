@@ -21,35 +21,41 @@ class _MultiChoiceChipScreenState extends State<MultiChoiceChipScreen> {
       appBar: AppBar(
         title: const Text('MultiChoiceChip'),
       ),
-      body: SizedBox(
-        width: MediaQuery.sizeOf(context).width,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: List.generate(
-            checkListItems.length,
-            (index) => ChoiceChip(
-              selectedColor: Colors.red,
-              backgroundColor:
-                  selectedItemId != null && index + 1 < selectedItemId!
-                      ? Colors.blue
-                      : Colors.white,
-              label: Text(checkListItems[index]['id'].toString()),
-              selected: selectedItemId == checkListItems[index]['id'],
-              showCheckmark: false,
-              onSelected: (bool value) {
-                setState(() {
-                  if (value) {
-                    selectedItemId = checkListItems[index]['id'];
-                  } else {
-                    selectedItemId = null;
-                  }
-                });
-              },
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: List.generate(
+                checkListItems.length,
+                (index) => ChoiceChip(
+                  selectedColor: Colors.red,
+                  backgroundColor:
+                      selectedItemId != null && index + 1 < selectedItemId!
+                          ? Colors.blue
+                          : Colors.white,
+                  label: Text(checkListItems[index]['id'].toString()),
+                  selected: selectedItemId == checkListItems[index]['id'],
+                  showCheckmark: false,
+                  onSelected: (bool value) {
+                    setState(() {
+                      if (value) {
+                        selectedItemId = checkListItems[index]['id'];
+                      } else {
+                        selectedItemId = null;
+                      }
+                    });
+                  },
+                ),
+              ),
             ),
           ),
-        ),
+          Text('Selected Item ID: $selectedItemId'),
+          selectedItemId != null
+              ? ElevatedButton(onPressed: () {}, child: const Text('Submit'))
+              : const SizedBox()
+        ],
       ),
     );
   }
 }
-
